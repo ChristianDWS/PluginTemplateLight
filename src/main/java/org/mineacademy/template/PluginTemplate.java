@@ -1,8 +1,12 @@
 package org.mineacademy.template;
 
+import org.bukkit.ChatColor;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.mineacademy.fo.plugin.SimplePlugin;
+import org.mineacademy.fo.remain.Remain;
 
 /**
  * PluginTemplate is a simple template you can use every time you make
@@ -25,16 +29,14 @@ public final class PluginTemplate extends SimplePlugin {
 	 */
 	@Override
 	protected void onPluginStart() {
-		// hello
-		System.out.println(1);
-		/*
-		 * hello
-		 * hello
-		 */
-
-
+		System.out.println("Modulos of 15 % 8: " + (15 % 8));
 		System.out.println("Knock, knock!");
 		System.out.println("Hello " + (1 + 1) + " YOU");
+
+		// for each loop that kicks all players on server start (for no reason)
+		for (Player player : Remain.getOnlinePlayers()) {
+			player.kickPlayer("Bye from the loop!");
+		}
 	}
 
 	/* ------------------------------------------------------------------------------- */
@@ -50,10 +52,16 @@ public final class PluginTemplate extends SimplePlugin {
 	@EventHandler
 	public void onRightClick(PlayerInteractEntityEvent event) {
 
-		event.getRightClicked().setFireTicks(100);
+		boolean isPig = event.getRightClicked().getType() == EntityType.PIG;
+		String message = isPig ? "That was a pig!" : "Not a pig!";
 
-		/*if (event.getRightClicked().getType() == EntityType.PIG)
-			event.getRightClicked().getWorld().createExplosion(event.getRightClicked().getLocation(), 5);*/
+		Player player = event.getPlayer();
+		player.sendMessage(message);
+
+		if (isPig) {
+			event.getRightClicked().setFireTicks(100);
+			player.sendMessage(ChatColor.RED + "Setting pig on fire muha!");
+		}
 	}
 
 	// returns two numbers, multiplied
