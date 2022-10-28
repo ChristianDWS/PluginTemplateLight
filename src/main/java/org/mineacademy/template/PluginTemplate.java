@@ -5,12 +5,16 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.mineacademy.fo.model.LimitedQueue;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.Remain;
+
+import java.util.*;
 
 /**
  * PluginTemplate is a simple template you can use every time you make
@@ -20,6 +24,13 @@ import org.mineacademy.fo.remain.Remain;
  * It uses Foundation for fast and efficient development process.
  */
 public final class PluginTemplate extends SimplePlugin {
+
+	private final List<Material> rewards = new ArrayList<>(Arrays.asList(
+			Material.DIAMOND,
+			Material.IRON_INGOT,
+			Material.CARROT,
+			Material.BONE)
+	);
 
 	/**
 	 * Automatically perform login ONCE when the plugin starts.
@@ -59,7 +70,12 @@ public final class PluginTemplate extends SimplePlugin {
 		Player player = event.getPlayer();
 		PlayerInventory inventory = player.getInventory();
 
-		ItemStack[] contents = inventory.getContents();
+
+		Collections.shuffle(this.rewards);
+
+		inventory.addItem(new ItemStack(this.rewards.get(0)));
+
+		/*ItemStack[] contents = inventory.getContents();
 
 		for (int index = 0; index < contents.length; index++) {
 			ItemStack item = contents[index];
@@ -75,6 +91,16 @@ public final class PluginTemplate extends SimplePlugin {
 			}
 		}
 
-		inventory.setContents(contents);
+		inventory.setContents(contents);*/
+	}
+
+	Queue<String> messages = new LimitedQueue<>(3);
+
+	@EventHandler
+	public void onChat(AsyncPlayerChatEvent event) {
+		messages.add(event.getMessage());
+
+		System.out.println("Last 3 messages from all players in the chat: " + this.messages);
+
 	}
 }
