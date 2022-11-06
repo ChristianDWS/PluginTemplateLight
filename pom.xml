@@ -24,7 +24,7 @@
         <author>Tyloon1e</author>
 
         <!-- Change to the full path where your main plugin class is located. -->
-        <main.class>org.mineacademy.template.PluginTemplate</main.class>
+        <main.class>org.mineacademy.template.PluginTemplateLight</main.class>
 
         <!-- Change the Java version this plugin is built on.
 

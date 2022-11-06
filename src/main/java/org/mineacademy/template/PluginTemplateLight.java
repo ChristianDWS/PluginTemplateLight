@@ -10,11 +10,15 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.mineacademy.fo.RandomUtil;
 import org.mineacademy.fo.model.LimitedQueue;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.Remain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Queue;
 
 /**
  * PluginTemplate is a simple template you can use every time you make
@@ -23,7 +27,7 @@ import java.util.*;
  * <p>
  * It uses Foundation for fast and efficient development process.
  */
-public final class PluginTemplate extends SimplePlugin {
+public final class PluginTemplateLight extends SimplePlugin {
 
 	private final List<Material> rewards = new ArrayList<>(Arrays.asList(
 			Material.DIAMOND,
@@ -70,10 +74,9 @@ public final class PluginTemplate extends SimplePlugin {
 		Player player = event.getPlayer();
 		PlayerInventory inventory = player.getInventory();
 
+		Material randomMaterial = RandomUtil.nextItem(rewards);
 
-		Collections.shuffle(this.rewards);
-
-		inventory.addItem(new ItemStack(this.rewards.get(0)));
+		inventory.addItem(new ItemStack(randomMaterial));
 
 		/*ItemStack[] contents = inventory.getContents();
 
